@@ -7,7 +7,7 @@ import csv
 maxRepeats = 2
 p = [0.569, 0.403, 0.736, 0.736]
 
-with open('realPrices.csv', 'rb') as csvfile:
+with open('test2.csv', 'rb') as csvfile:
     reader = csv.reader(csvfile)
     columns = reader.next()[1:]
     columnsLookup = {columns[i]: i for i in xrange(len(columns))}
@@ -67,14 +67,19 @@ print 'Number of each dish:'
 for i in xrange(len(result.x)):
     print dishes[i][0], np.round(result.x[i], 1)
 
-def weightedP(dishValues):
-    if np.sum(dishValues[:4]) == 0:
-        return 1
-    else:
-        return np.sum(np.multiply(p, dishValues[:4])) / np.sum(dishValues[:4])
+def modeledP(dishValues):
+    sugar = dishValues[int(columnsLookup['sugar'])]
+    sodium = dishValues[int(columnsLookup['sodium'])]
+    calcium = dishValues[int(columnsLookup['calcium'])]
+    A = 0.0445
+    B = 0.00513
+    C = -0.018
+
+    P = 1-math.e**-(A*sugar + B*sodium + C*calcium)
+    return P
 
 def actualCalories(x):
-    return np.sum([dishesValues[i][int(columnsLookup['calories'])] * weightedP(dishesValues[i]) * x[i] for i in xrange(len(dishesValues))])
+    return np.sum([dishesValues[i][int(columnsLookup['calories'])] * modeledP(dishesValues[i]) * x[i] for i in xrange(len(dishesValues))])
 
 print
 actual_calories = actualCalories(result.x)
