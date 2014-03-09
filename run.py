@@ -10,7 +10,8 @@ params = {
     'USDA_fruits': 2.5,
     'USDA_vegetables': 3.75,
     'USDA_proteins': 9.5,
-    'USDA_grains': 9
+    'USDA_grains': 9,
+    'price': 7
 }
 
 outputs = {}

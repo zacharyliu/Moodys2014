@@ -13,10 +13,12 @@ class Model2:
                  USDA_fruits=2.5,
                  USDA_vegetables=3.75,
                  USDA_proteins=9.5,
-                 USDA_grains=9):
+                 USDA_grains=9,
+                 price=7):
         self.maxRepeats = maxRepeats
         self.P_A, self.P_B, self.P_C = P_A, P_B, P_C
         self.usda = {'fruits': USDA_fruits, 'vegetables': USDA_vegetables, 'proteins': USDA_proteins, 'grains': USDA_grains}
+        self.price = price
 
         with open('test2.csv', 'rb') as csvfile:
             reader = csv.reader(csvfile)
@@ -46,7 +48,7 @@ class Model2:
                                          method='SLSQP',
                                          bounds = [(0, self.maxRepeats)]*len(self.dishes),
                                          constraints = [
-                                             {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['price', 6, True]},
+                                             {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['price', self.price, True]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['fruits', self.usda['fruits'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['vegetables', self.usda['vegetables'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['proteins', self.usda['proteins'], False]},
