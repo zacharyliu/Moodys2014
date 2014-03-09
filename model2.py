@@ -12,8 +12,9 @@ class Model2:
         'P_C': -0.018,
         'USDA_fruits': 2.5,
         'USDA_vegetables': 3.75,
-        'USDA_proteins': 9.5,
-        'USDA_grains': 9,
+        'USDA_proteins': 8,
+        'USDA_grains': 8,
+        'USDA_dairy': 5,
         'price': 7
     }
 
@@ -27,7 +28,7 @@ class Model2:
 
         self.maxRepeats = newParams['maxRepeats']
         self.P_A, self.P_B, self.P_C = newParams['P_A'], newParams['P_B'], newParams['P_C']
-        self.usda = {'fruits': newParams['USDA_fruits'], 'vegetables': newParams['USDA_vegetables'], 'proteins': newParams['USDA_proteins'], 'grains': newParams['USDA_grains']}
+        self.usda = {'fruits': newParams['USDA_fruits'], 'vegetables': newParams['USDA_vegetables'], 'proteins': newParams['USDA_proteins'], 'grains': newParams['USDA_grains'], 'dairy': newParams['USDA_dairy']}
         self.price = newParams['price']
 
         with open('test2.csv', 'rb') as csvfile:
@@ -63,6 +64,7 @@ class Model2:
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['vegetables', self.usda['vegetables'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['proteins', self.usda['proteins'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['grains', self.usda['grains'], False]},
+                                             {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['dairy', self.usda['dairy'], False]},
                                          ],
                                          options = {
                                              'disp': True,
