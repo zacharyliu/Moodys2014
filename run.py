@@ -25,4 +25,7 @@ for key in params.keys():
     model = Model2(params)
     outputs[key]['original'] = model.solve()
 
+    # range
+    outputs[key]['range'] = outputs[key]['increased'] - outputs[key]['decreased']
+
 print outputs

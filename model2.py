@@ -78,7 +78,7 @@ class Model2:
     def solve(self):
         result = scipy.optimize.minimize(fun = lambda x: -self.actualCalories(x),
                                          # x0 = [1.0/len(dishes)]*len(dishes),
-                                         x0 = [self.maxRepeats/2 for i in xrange(len(self.dishes))],
+                                         x0 = [0 for i in xrange(len(self.dishes))],
                                          # args = ['calories', 0, True],
                                          method='SLSQP',
                                          bounds = [(0, self.maxRepeats)]*len(self.dishes),
