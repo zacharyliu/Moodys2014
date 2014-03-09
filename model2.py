@@ -5,20 +5,30 @@ import scipy.optimize
 import csv
 
 class Model2:
-    def __init__(self,
-                 maxRepeats=2,
-                 P_A = 0.0445,
-                 P_B = 0.00513,
-                 P_C = -0.018,
-                 USDA_fruits=2.5,
-                 USDA_vegetables=3.75,
-                 USDA_proteins=9.5,
-                 USDA_grains=9,
-                 price=7):
-        self.maxRepeats = maxRepeats
-        self.P_A, self.P_B, self.P_C = P_A, P_B, P_C
-        self.usda = {'fruits': USDA_fruits, 'vegetables': USDA_vegetables, 'proteins': USDA_proteins, 'grains': USDA_grains}
-        self.price = price
+    params = {
+        'maxRepeats': 2,
+        'P_A': 0.0445,
+        'P_B': 0.00513,
+        'P_C': -0.018,
+        'USDA_fruits': 2.5,
+        'USDA_vegetables': 3.75,
+        'USDA_proteins': 9.5,
+        'USDA_grains': 9,
+        'price': 7
+    }
+
+    def __init__(self, params):
+        newParams = {}
+        for key in self.params.keys():
+            if key in params:
+                newParams[key] = params[key]
+            else:
+                newParams[key] = self.params[key]
+
+        self.maxRepeats = newParams['maxRepeats']
+        self.P_A, self.P_B, self.P_C = newParams['P_A'], newParams['P_B'], newParams['P_C']
+        self.usda = {'fruits': newParams['USDA_fruits'], 'vegetables': newParams['USDA_vegetables'], 'proteins': newParams['USDA_proteins'], 'grains': newParams['USDA_grains']}
+        self.price = newParams['price']
 
         with open('test2.csv', 'rb') as csvfile:
             reader = csv.reader(csvfile)
@@ -88,5 +98,5 @@ class Model2:
         return np.sum([self.dishesValues[i][int(self.columnsLookup['calories'])] * self.modeledP(self.dishesValues[i]) * x[i] for i in xrange(len(self.dishesValues))])
 
 if __name__ == '__main__':
-    model = Model2()
+    model = Model2({})
     model.solve()
