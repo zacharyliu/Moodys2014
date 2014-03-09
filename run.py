@@ -4,10 +4,9 @@ factor = 0.2
 
 params = {
     'maxRepeats': 2,
-    'P_vegetables': 0.569,
-    'P_fruits': 0.403,
-    'P_proteins': 0.736,
-    'P_grains': 0.736,
+    'P_A': 0.0445,
+    'P_B': 0.00513,
+    'P_C': -0.018,
     'USDA_fruits': 2.5,
     'USDA_vegetables': 3.75,
     'USDA_proteins': 9.5,

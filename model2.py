@@ -7,16 +7,15 @@ import csv
 class Model2:
     def __init__(self,
                  maxRepeats=2,
-                 P_vegetables=0.569,
-                 P_fruits=0.403,
-                 P_proteins=0.736,
-                 P_grains=0.736,
+                 P_A = 0.0445,
+                 P_B = 0.00513,
+                 P_C = -0.018,
                  USDA_fruits=2.5,
                  USDA_vegetables=3.75,
                  USDA_proteins=9.5,
                  USDA_grains=9):
         self.maxRepeats = maxRepeats
-        self.P = [P_vegetables, P_fruits, P_proteins, P_grains]
+        self.P_A, self.P_B, self.P_C = P_A, P_B, P_C
         self.usda = {'fruits': USDA_fruits, 'vegetables': USDA_vegetables, 'proteins': USDA_proteins, 'grains': USDA_grains}
 
         with open('test2.csv', 'rb') as csvfile:
@@ -42,7 +41,7 @@ class Model2:
     def solve(self):
         result = scipy.optimize.minimize(fun = self.constrainAttr,
                                          # x0 = [1.0/len(dishes)]*len(dishes),
-                                         x0 = [random.random() * self.maxRepeats for i in xrange(len(self.dishes))],
+                                         x0 = [0 for i in xrange(len(self.dishes))],
                                          args = ['calories', 0, True],
                                          method='SLSQP',
                                          bounds = [(0, self.maxRepeats)]*len(self.dishes),
@@ -79,12 +78,13 @@ class Model2:
         sugar = dishValues[int(self.columnsLookup['sugar'])]
         sodium = dishValues[int(self.columnsLookup['sodium'])]
         calcium = dishValues[int(self.columnsLookup['calcium'])]
-        A = 0.0445
-        B = 0.00513
-        C = -0.018
 
-        P = 1-math.e**-(A*sugar + B*sodium + C*calcium)
+        P = 1-math.e**-(self.P_A*sugar + self.P_B*sodium + self.P_C*calcium)
         return P
 
     def actualCalories(self, x):
         return np.sum([self.dishesValues[i][int(self.columnsLookup['calories'])] * self.modeledP(self.dishesValues[i]) * x[i] for i in xrange(len(self.dishesValues))])
+
+if __name__ == '__main__':
+    model = Model2()
+    model.solve()
