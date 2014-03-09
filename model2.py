@@ -31,7 +31,7 @@ class Model2:
         self.usda = {'fruits': newParams['USDA_fruits'], 'vegetables': newParams['USDA_vegetables'], 'proteins': newParams['USDA_proteins'], 'grains': newParams['USDA_grains'], 'dairy': newParams['USDA_dairy']}
         self.price = newParams['price']
 
-        with open('test2.csv', 'rb') as csvfile:
+        with open('realPrices2.csv', 'rb') as csvfile:
             reader = csv.reader(csvfile)
             self.columns = reader.next()[1:]
             self.columnsLookup = {self.columns[i]: i for i in xrange(len(self.columns))}
@@ -52,10 +52,10 @@ class Model2:
         return constraint
 
     def solve(self):
-        result = scipy.optimize.minimize(fun = self.constrainAttr,
+        result = scipy.optimize.minimize(fun = lambda x: -self.actualCalories(x),
                                          # x0 = [1.0/len(dishes)]*len(dishes),
                                          x0 = [0 for i in xrange(len(self.dishes))],
-                                         args = ['calories', 0, True],
+                                         # args = ['calories', 0, True],
                                          method='SLSQP',
                                          bounds = [(0, self.maxRepeats)]*len(self.dishes),
                                          constraints = [
