@@ -73,6 +73,8 @@ class Model2:
         print 'Actual calorie consumption:', actual_calories
         print '=', actual_calories/5.0, 'per day'
 
+        return actual_calories/5.0
+
     def modeledP(self, dishValues):
         sugar = dishValues[int(self.columnsLookup['sugar'])]
         sodium = dishValues[int(self.columnsLookup['sodium'])]
