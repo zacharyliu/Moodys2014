@@ -10,7 +10,7 @@ class Model2:
         'P_A': 0.0445,
         'P_B': 0.00513,
         'P_C': -0.018,
-        'price': 7000
+        'price': 7
     }
 
     params_K_5 = {
