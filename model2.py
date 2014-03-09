@@ -21,36 +21,26 @@ def scale(x):
 def getAttr(x, attr):
     return [dish[int(columnsLookup[attr])] for dish in scale(x)]
 
-def calories(x):
-    n = sum(getAttr(x, 'calories'))
-    return -n
-
-def price(x):
-    total = sum(getAttr(x, 'price'))
-    return 6-total
-
 usda = {'fruits': 2.5, 'vegetables': 3.75, 'proteins': 9.5, 'grains': 9}
 
-def usda_fruits(x):
-    return np.sum(getAttr(x, 'fruits')) - usda['fruits']
-def usda_vegetables(x):
-    return np.sum(getAttr(x, 'vegetables')) - usda['vegetables']
-def usda_proteins(x):
-    return np.sum(getAttr(x, 'proteins')) - usda['proteins']
-def usda_grains(x):
-    return np.sum(getAttr(x, 'grains')) - usda['grains']
+def constrainAttr(x, attr, value, isMaximum):
+    constraint = np.sum(getAttr(x, attr)) - value
+    if isMaximum:
+        constraint *= -1
+    return constraint
 
-result = scipy.optimize.minimize(fun = calories,
+result = scipy.optimize.minimize(fun = constrainAttr,
                                  # x0 = [1.0/len(dishes)]*len(dishes),
                                  x0 = [random.random() * maxRepeats for i in xrange(len(dishes))],
+                                 args = ['calories', 0, True],
                                  method='SLSQP',
                                  bounds = [(0, maxRepeats)]*len(dishes),
                                  constraints = [
-                                     {'type': 'ineq', 'fun': price},
-                                     {'type': 'ineq', 'fun': usda_fruits},
-                                     {'type': 'ineq', 'fun': usda_vegetables},
-                                     {'type': 'ineq', 'fun': usda_proteins},
-                                     {'type': 'ineq', 'fun': usda_grains},
+                                     {'type': 'ineq', 'fun': constrainAttr, 'args': ['price', 6, True]},
+                                     {'type': 'ineq', 'fun': constrainAttr, 'args': ['fruits', usda['fruits'], False]},
+                                     {'type': 'ineq', 'fun': constrainAttr, 'args': ['vegetables', usda['vegetables'], False]},
+                                     {'type': 'ineq', 'fun': constrainAttr, 'args': ['proteins', usda['proteins'], False]},
+                                     {'type': 'ineq', 'fun': constrainAttr, 'args': ['grains', usda['grains'], False]},
                                  ],
                                  options = {
                                      'disp': True,
