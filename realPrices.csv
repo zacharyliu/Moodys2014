@@ -1,0 +1,34 @@
+dish,fruits,vegetables,proteins,grains,calories,price
+turkey sub,0,0,1,1,428,0.93
+refried beans,0,0,2,0,199,0.83
+jicama,0,0.25,0,0,12.25,0.24
+green pepper strips,0,0.25,0,0,7.5,0.08
+cantaloupe wedges,0.5,0,0,0,30,0.46
+skim milk,0,0,0,0,80,0.12
+mustard,0,0,0,0,5.94,0.13
+reduced fat mayonaise,0,0,0,0,40,0.27
+low fat ranch dip,0,0,0,0,60,0.078
+spaghetti,0,0,0,2,220,0.63
+Meat Sauce,0,0,2,0,281,0.13
+"green beans, cooked",0,0.5,0,0,17,0.135
+broccoli,0,0.5,0,0,15.5,0.028
+cauliflower,0,0.5,0,0,12.5,0.043
+kiwi halves,1,0,0,0,46,0.0125
+low-fat milk,0,0,0,0,113,0.12
+soft margarine,0,0,0,0,24,0.27
+chef salad,0,1,1.5,0,300,1.25
+"corn, cooked",0,0.5,0,0,66,0.23
+"baby carrots, raw",0,0.5,0,0,24,0.25
+banana,1,0,0,0,105,0.5
+low fat ranch dressing,0,0,0,0,22,0.078
+low far italian dressing,0,0,0,0,21,0.078
+baked fish nuggets,0,0,2,0,68,0.3
+mashed potatoes,0,0.5,0,0,105,0.3
+steamed broccoli,0,0.5,0,0,15.5,0.028
+peaches,1,0,0,0,66,0.18
+tarter sauce,0,0,0,0,222,0.275
+cheese pizza,0,0,0,2,237,2.01
+sweet potato fries,0,0.5,0,0,250,0.3
+grape tomatoes,0,0.5,0,0,95,0.23
+applesauce,1,0,0,0,86,0.21
+Whole Wheat Roll,0,0,0,2,84,0.5
