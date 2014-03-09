@@ -68,21 +68,21 @@ class Model2:
         for i in xrange(len(result.x)):
             print self.dishes[i][0], np.round(result.x[i], 1)
 
-        def modeledP(dishValues):
-            sugar = dishValues[int(self.columnsLookup['sugar'])]
-            sodium = dishValues[int(self.columnsLookup['sodium'])]
-            calcium = dishValues[int(self.columnsLookup['calcium'])]
-            A = 0.0445
-            B = 0.00513
-            C = -0.018
-
-            P = 1-math.e**-(A*sugar + B*sodium + C*calcium)
-            return P
-
-        def actualCalories(x):
-            return np.sum([self.dishesValues[i][int(self.columnsLookup['calories'])] * modeledP(self.dishesValues[i]) * x[i] for i in xrange(len(self.dishesValues))])
-
         print
-        actual_calories = actualCalories(result.x)
+        actual_calories = self.actualCalories(result.x)
         print 'Actual calorie consumption:', actual_calories
         print '=', actual_calories/5.0, 'per day'
+
+    def modeledP(self, dishValues):
+        sugar = dishValues[int(self.columnsLookup['sugar'])]
+        sodium = dishValues[int(self.columnsLookup['sodium'])]
+        calcium = dishValues[int(self.columnsLookup['calcium'])]
+        A = 0.0445
+        B = 0.00513
+        C = -0.018
+
+        P = 1-math.e**-(A*sugar + B*sodium + C*calcium)
+        return P
+
+    def actualCalories(self, x):
+        return np.sum([self.dishesValues[i][int(self.columnsLookup['calories'])] * self.modeledP(self.dishesValues[i]) * x[i] for i in xrange(len(self.dishesValues))])
