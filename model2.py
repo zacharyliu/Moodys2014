@@ -17,7 +17,9 @@ class Model2:
         'USDA_fruits': 2.5,
         'USDA_vegetables': 3.75,
         'USDA_proteins': 8,
+        'USDA_proteins_max': 10,
         'USDA_grains': 8,
+        'USDA_grains_max': 9,
         'USDA_dairy': 5,
         'USDA_sodium': 640*5,
     }
@@ -26,7 +28,9 @@ class Model2:
         'USDA_fruits': 2.5,
         'USDA_vegetables': 3.75,
         'USDA_proteins': 9,
+        'USDA_proteins_max': 10,
         'USDA_grains': 8,
+        'USDA_grains_max': 10,
         'USDA_dairy': 5,
         'USDA_sodium': 710*5,
     }
@@ -35,7 +39,9 @@ class Model2:
         'USDA_fruits': 5,
         'USDA_vegetables': 5,
         'USDA_proteins': 10,
+        'USDA_proteins_max': 12,
         'USDA_grains': 10,
+        'USDA_grains_max': 12,
         'USDA_dairy': 5,
         'USDA_sodium': 740*5,
     }
@@ -49,6 +55,8 @@ class Model2:
                 newParams[key] = params[key]
             else:
                 newParams[key] = self.params[key]
+
+        self.params = newParams
 
         self.maxRepeats = newParams['maxRepeats']
         self.P_A, self.P_B, self.P_C = newParams['P_A'], newParams['P_B'], newParams['P_C']
@@ -87,7 +95,9 @@ class Model2:
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['fruits', self.usda['fruits'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['vegetables', self.usda['vegetables'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['proteins', self.usda['proteins'], False]},
+                                             {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['proteins', self.params['USDA_proteins_max'], True]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['grains', self.usda['grains'], False]},
+                                             {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['grains', self.params['USDA_proteins_max'], True]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['dairy', self.usda['dairy'], False]},
                                              {'type': 'ineq', 'fun': self.constrainAttr, 'args': ['sodium', self.usda['sodium'], True]},
                                          ],
