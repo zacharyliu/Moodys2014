@@ -127,7 +127,7 @@ class Model2:
         calcium = dishValues[int(self.columnsLookup['calcium'])]
 
         P = 1-math.e**-(self.P_A*sugar + self.P_B*sodium + self.P_C*calcium)
-        if P<0: print sugar, sodium, calcium, P
+        # if P<0: print sugar, sodium, calcium, P
         return P
 
     def actualCalories(self, x):
